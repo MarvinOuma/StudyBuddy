@@ -2,6 +2,8 @@ import pytest
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+os.environ['FLASK_APP'] = 'run.py'
+os.environ['FLASK_ENV'] = 'development'
 from app import create_app, db
 from app.models import User
 import json
