@@ -4,17 +4,17 @@ import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
   const { login } = useContext(AuthContext);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/auth/login', { email, password });
-      login(response.data.access_token);
+      const response = await api.post('/auth/login', { username, password });
+      login(response.data.token);
     } catch (err) {
-      setError('Invalid email or password');
+      setError('Invalid username or password');
     }
   };
 
@@ -24,8 +24,8 @@ const Login = () => {
       {error && <p style={{color: 'red'}}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+          <label>Username:</label>
+          <input type="text" value={username} onChange={e => setUsername(e.target.value)} required />
         </div>
         <div>
           <label>Password:</label>

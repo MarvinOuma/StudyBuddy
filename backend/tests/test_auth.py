@@ -10,14 +10,20 @@ import json
 
 @pytest.fixture
 def client():
+    print("Setting up app and test client")
     app = create_app()
     app.config['TESTING'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+    # Use a temporary file-based SQLite DB to avoid in-memory connection issues
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test_temp.db'
+    app.config['SECRET_KEY'] = 'test-secret-key'
 
     with app.app_context():
+        print("Creating all tables")
         db.create_all()
-        yield app.test_client()
-        db.drop_all()
+        with app.test_client() as client:
+            print("Yielding test client")
+            yield client
+        print("Dropping all tables")
 
 def test_register_login(client):
     # Test registration
