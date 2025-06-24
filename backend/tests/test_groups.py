@@ -53,3 +53,12 @@ def test_create_group(client, auth_headers):
     data = json.loads(response.data)
     assert data['title'] == 'Math Study Group'
     assert data['subject'] == 'Mathematics'
+    assert data['description'] == 'Group for math enthusiasts'
+    assert 'created_by' in data
+    assert isinstance(data['id'], int)
+
+    # Test creating a group with missing required fields
+    response = client.post('/groups', json={
+        'title': 'Math Study Group'
+    }, headers=auth_headers)
+    assert response.status_code == 400

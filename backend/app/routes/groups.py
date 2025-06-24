@@ -21,10 +21,30 @@ def get_groups():
     return jsonify(result), 200
 
 @groups_bp.route('/', methods=['POST'])
-# @jwt_required()  # Temporarily disabled for testing
+@jwt_required()
 def create_group():
-    # Simplified for debugging
-    return jsonify({'message': 'Group created', 'group_id': 1}), 201
+    data = request.get_json()
+    if not data or not data.get('title') or not data.get('subject'):
+        return jsonify({'message': 'Missing required fields'}), 400
+
+    user_id = get_jwt_identity()
+    new_group = StudyGroup(
+        title=data['title'],
+        subject=data['subject'],
+        description=data.get('description', ''),
+        created_by=user_id
+    )
+    
+    db.session.add(new_group)
+    db.session.commit()
+
+    return jsonify({
+        'id': new_group.id,
+        'title': new_group.title,
+        'subject': new_group.subject,
+        'description': new_group.description,
+        'created_by': new_group.created_by
+    }), 201
 
 @groups_bp.route('/<int:group_id>', methods=['GET'])
 @jwt_required()
