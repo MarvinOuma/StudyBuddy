@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../services/api';
+import axios from 'axios';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -11,11 +11,12 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/auth/register', { username, email, password });
+      await axios.post('http://localhost:5000/auth/register', { username, email, password });
       setSuccess('Registration successful! You can now log in.');
       setError(null);
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      console.error('Registration error:', err.response ? err.response.data : err.message);
+      setError(err.response && err.response.data && err.response.data.message ? err.response.data.message : 'Registration failed. Please try again.');
       setSuccess(null);
     }
   };

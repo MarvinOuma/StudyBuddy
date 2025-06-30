@@ -12,7 +12,7 @@ jwt = JWTManager()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    CORS(app)
+    CORS(app, resources={r"/*": {"origins": "*"}})
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)

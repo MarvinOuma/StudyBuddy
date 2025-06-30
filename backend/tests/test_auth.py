@@ -26,12 +26,13 @@ def client():
         print("Dropping all tables")
 
 def test_register_login(client):
+    headers = {'Content-Type': 'application/json'}
     # Test registration
     response = client.post('/auth/register', json={
         'username': 'testuser',
         'email': 'testuser@example.com',
-        'password': 'testpass'
-    })
+        'password': 'testpass',
+    }, headers=headers)
     assert response.status_code == 201
     assert b'User registered successfully' in response.data
 
@@ -39,15 +40,15 @@ def test_register_login(client):
     response = client.post('/auth/register', json={
         'username': 'testuser',
         'email': 'testuser@example.com',
-        'password': 'testpass'
-    })
+        'password': 'testpass',
+    }, headers=headers)
     assert response.status_code == 400
 
     # Test login with correct credentials
     response = client.post('/auth/login', json={
         'username': 'testuser',
-        'password': 'testpass'
-    })
+        'password': 'testpass',
+    }, headers=headers)
     assert response.status_code == 200
     data = json.loads(response.data)
     assert 'token' in data
@@ -55,10 +56,10 @@ def test_register_login(client):
     # Test login with wrong password
     response = client.post('/auth/login', json={
         'username': 'testuser',
-        'password': 'wrongpass'
-    })
+        'password': 'wrongpass',
+    }, headers=headers)
     assert response.status_code == 401
 
     # Test login with missing fields
-    response = client.post('/auth/login', json={})
+    response = client.post('/auth/login', json={}, headers=headers)
     assert response.status_code == 400
