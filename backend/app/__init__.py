@@ -12,7 +12,10 @@ jwt = JWTManager()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    CORS(app, resources={r"/*": {"origins": "*"}})
+
+    # ✅ CORS FIX: Allow frontend (React) at localhost:3000, with credentials
+    CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
@@ -22,11 +25,13 @@ def create_app():
     from app.routes.sessions import sessions_bp
     from app.routes.memberships import memberships_bp
     from app.routes.messages import messages_bp
+    from app.routes.profile import profile_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(groups_bp, url_prefix='/groups')
     app.register_blueprint(sessions_bp, url_prefix='/sessions')
     app.register_blueprint(memberships_bp, url_prefix='/memberships')
     app.register_blueprint(messages_bp, url_prefix='/messages')
+    app.register_blueprint(profile_bp, url_prefix='/profile')
 
     return app

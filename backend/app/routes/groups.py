@@ -5,8 +5,11 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 groups_bp = Blueprint('groups', __name__)
 
+@groups_bp.route('/test', methods=['GET'])
+def test_groups():
+    return jsonify({'message': 'Groups endpoint working'}), 200
+
 @groups_bp.route('/', methods=['GET'])
-@jwt_required()
 def get_groups():
     groups = StudyGroup.query.all()
     result = []
@@ -21,7 +24,6 @@ def get_groups():
     return jsonify(result), 200
 
 @groups_bp.route('/', methods=['POST'])
-@jwt_required()
 def create_group():
     data = request.get_json()
     if not data or not data.get('title') or not data.get('subject'):
@@ -47,7 +49,6 @@ def create_group():
     }), 201
 
 @groups_bp.route('/<int:group_id>', methods=['GET'])
-@jwt_required()
 def get_group(group_id):
     group = StudyGroup.query.get_or_404(group_id)
     return jsonify({
@@ -59,7 +60,6 @@ def get_group(group_id):
     }), 200
 
 @groups_bp.route('/<int:group_id>', methods=['PUT'])
-@jwt_required()
 def update_group(group_id):
     group = StudyGroup.query.get_or_404(group_id)
     data = request.get_json()
@@ -78,7 +78,6 @@ def update_group(group_id):
     return jsonify({'message': 'Group updated'}), 200
 
 @groups_bp.route('/<int:group_id>', methods=['DELETE'])
-@jwt_required()
 def delete_group(group_id):
     group = StudyGroup.query.get_or_404(group_id)
     db.session.delete(group)

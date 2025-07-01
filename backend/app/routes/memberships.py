@@ -6,7 +6,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 memberships_bp = Blueprint('memberships', __name__)
 
 @memberships_bp.route('/join', methods=['POST'])
-@jwt_required()
 def join_group():
     user_id = get_jwt_identity()
     data = request.get_json()
@@ -26,7 +25,6 @@ def join_group():
     return jsonify({'message': 'Joined group successfully'}), 201
 
 @memberships_bp.route('/leave', methods=['POST'])
-@jwt_required()
 def leave_group():
     user_id = get_jwt_identity()
     data = request.get_json()
@@ -45,7 +43,6 @@ def leave_group():
     return jsonify({'message': 'Left group successfully'}), 200
 
 @memberships_bp.route('/user', methods=['GET'])
-@jwt_required()
 def get_user_memberships():
     user_id = get_jwt_identity()
     memberships = Membership.query.filter_by(user_id=user_id).all()
