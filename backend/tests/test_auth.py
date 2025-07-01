@@ -24,6 +24,7 @@ def client():
             print("Yielding test client")
             yield client
         print("Dropping all tables")
+        db.drop_all()
 
 def test_register_login(client):
     headers = {'Content-Type': 'application/json'}
