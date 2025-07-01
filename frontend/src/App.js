@@ -14,7 +14,12 @@ import Dashboard from './pages/Dashboard';
 import './styles/global.css';
 
 const PrivateRoute = ({ children }) => {
-  const { user } = React.useContext(AuthContext);
+  const { user, loading } = React.useContext(AuthContext);
+  
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+  
   return user ? children : <Navigate to="/login" />;
 };
 
