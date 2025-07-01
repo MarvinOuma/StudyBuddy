@@ -30,14 +30,16 @@ const Profile = () => {
   }, [user]);
 
   return (
-    <div className="profile-container">
-      <h2>Your Profile</h2>
-      <div className="profile-info">
-        <p><strong>Username:</strong> {user?.username || 'Not logged in'}</p>
-        <p><strong>ID:</strong> {user?.id || 'N/A'}</p>
+    <div className="container">
+      <div className="card">
+        <h2>Your Profile</h2>
+        <div className="profile-info">
+          <p><strong>Username:</strong> {user?.username || 'Not logged in'}</p>
+          <p><strong>ID:</strong> {user?.id || 'N/A'}</p>
+        </div>
       </div>
       
-      <div className="profile-stats">
+      <div className="card">
         <h3>Your Study Activity</h3>
         <div className="stat-item">
           <span>Groups Joined:</span>
@@ -49,7 +51,7 @@ const Profile = () => {
         </div>
       </div>
       
-      <div className="joined-groups">
+      <div className="card">
         <h3>Your Groups</h3>
         {joinedGroups.length > 0 ? (
           <div className="groups-list">

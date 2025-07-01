@@ -204,54 +204,210 @@ nav {
 
 /* Dark Mode Styles */
 body.dark-mode {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  color: #ecf0f1;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #ffffff;
 }
 
 body.dark-mode .card {
-  background: #34495e;
-  color: #ecf0f1;
+  background: #2d2d2d;
+  color: #ffffff;
+  border: 1px solid #404040;
 }
 
 body.dark-mode nav {
-  background: rgba(52, 73, 94, 0.95);
+  background: rgba(45, 45, 45, 0.95);
 }
 
 body.dark-mode .nav-links a {
-  color: #ecf0f1;
+  color: #ffffff;
 }
 
 body.dark-mode .nav-links a:hover {
-  color: #3498db;
+  color: #667eea;
 }
 
 body.dark-mode input, body.dark-mode textarea {
-  background: #2c3e50;
-  color: #ecf0f1;
-  border-color: #34495e;
+  background: #404040;
+  color: #ffffff;
+  border-color: #555555;
+}
+
+body.dark-mode input::placeholder, body.dark-mode textarea::placeholder {
+  color: #cccccc;
 }
 
 body.dark-mode .btn {
-  background: #3498db;
+  background: #667eea;
+  color: #ffffff;
 }
 
 body.dark-mode .btn:hover {
-  background: #2980b9;
+  background: #5a6fd8;
+}
+
+body.dark-mode .btn-secondary {
+  background: #555555;
+  color: #ffffff;
+}
+
+body.dark-mode .btn-secondary:hover {
+  background: #666666;
+}
+
+body.dark-mode .btn-danger {
+  background: #dc3545;
+  color: #ffffff;
 }
 
 body.dark-mode .stat-card {
-  background: #34495e;
-  color: #ecf0f1;
+  background: #2d2d2d;
+  color: #ffffff;
+  border: 1px solid #404040;
+}
+
+body.dark-mode .stat-card h3 {
+  color: #667eea;
 }
 
 body.dark-mode .section {
-  background: #34495e;
-  color: #ecf0f1;
+  background: #2d2d2d;
+  color: #ffffff;
+  border: 1px solid #404040;
 }
 
 body.dark-mode li {
-  background: #34495e;
-  color: #ecf0f1;
+  background: #2d2d2d;
+  color: #ffffff;
+  border: 1px solid #404040;
+}
+
+body.dark-mode .item {
+  border-bottom-color: #404040;
+}
+
+body.dark-mode label {
+  color: #ffffff;
+}
+
+body.dark-mode .error {
+  background: #4a1a1a;
+  color: #ff6b6b;
+  border: 1px solid #dc3545;
+}
+
+body.dark-mode .success {
+  background: #1a4a1a;
+  color: #51cf66;
+  border: 1px solid #28a745;
+}
+
+body.dark-mode .loading {
+  color: #cccccc;
+}
+
+body.dark-mode .role-select {
+  background: #404040;
+  color: #ffffff;
+  border-color: #555555;
+}
+
+body.dark-mode .session-completed {
+  background: #1a4a1a;
+  color: #51cf66;
+}
+
+body.dark-mode .session-upcoming {
+  background: #1a3a4a;
+  color: #74c0fc;
+}
+
+/* Additional dark mode text fixes */
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+  color: #ffffff;
+}
+
+body.dark-mode p {
+  color: #ffffff;
+}
+
+body.dark-mode span {
+  color: #ffffff;
+}
+
+body.dark-mode strong {
+  color: #ffffff;
+}
+
+body.dark-mode .timestamp {
+  color: #cccccc;
+}
+
+body.dark-mode .message-header {
+  color: #ffffff;
+}
+
+body.dark-mode .own-message .message-header {
+  color: rgba(255,255,255,0.9);
+}
+
+body.dark-mode .group-item h4 {
+  color: #ffffff;
+}
+
+body.dark-mode .group-item p {
+  color: #cccccc;
+}
+
+body.dark-mode .group-item.active h4,
+body.dark-mode .group-item.active p {
+  color: #ffffff;
+}
+
+body.dark-mode .member-info p {
+  color: #ffffff;
+}
+
+body.dark-mode .stat-item span {
+  color: #ffffff;
+}
+
+body.dark-mode .profile-info p {
+  color: #ffffff;
+}
+
+body.dark-mode .group-item strong {
+  color: #ffffff;
+}
+
+body.dark-mode .item p {
+  color: #ffffff;
+}
+
+body.dark-mode .item strong {
+  color: #ffffff;
+}
+
+body.dark-mode a {
+  color: #667eea;
+}
+
+body.dark-mode a:hover {
+  color: #5a6fd8;
+}
+
+body.dark-mode .form-group label {
+  color: #ffffff;
+}
+
+body.dark-mode select {
+  background: #404040;
+  color: #ffffff;
+  border-color: #555555;
+}
+
+body.dark-mode option {
+  background: #404040;
+  color: #ffffff;
 }
 
 /* Toggle Switch Styles */

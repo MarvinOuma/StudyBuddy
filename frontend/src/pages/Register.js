@@ -23,10 +23,11 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <h2>Register</h2>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {success && <p style={{color: 'green'}}>{success}</p>}
+    <div className="container">
+      <div className="card register-container">
+        <h2>Register</h2>
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
@@ -42,9 +43,10 @@ const Register = () => {
         </div>
         <button type="submit">Register</button>
       </form>
-      <p>
-        Already have an account? <a href="/login">Login here</a>
-      </p>
+        <p>
+          Already have an account? <a href="/login">Login here</a>
+        </p>
+      </div>
     </div>
   );
 };

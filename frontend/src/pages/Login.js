@@ -23,9 +23,10 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <p style={{color: 'red'}}>{error}</p>}
+    <div className="container">
+      <div className="card login-container">
+        <h2>Login</h2>
+        {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
         <label>
           Username:
@@ -47,9 +48,10 @@ const Login = () => {
         </label>
         <button type="submit">Login</button>
       </form>
-      <p>
-        Don't have an account? <a href="/register">Register here</a>
-      </p>
+        <p>
+          Don't have an account? <a href="/register">Register here</a>
+        </p>
+      </div>
     </div>
   );
 };

@@ -1,49 +1,44 @@
-/* Login page styles */
 .login-container {
   max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.login-container .card {
+  text-align: center;
 }
 
 .login-container h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
   color: #333;
 }
 
 .login-container form {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
 .login-container label {
-  margin-bottom: 0.5rem;
+  text-align: left;
   font-weight: 600;
-  color: #555;
+  color: #495057;
 }
 
-.login-container input[type="text"] {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
+.login-container p {
+  margin-top: 20px;
+  color: #6c757d;
 }
 
-.login-container button {
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* Dark mode */
+body.dark-mode .login-container h2 {
+  color: #ffffff;
 }
 
-.login-container button:hover {
-  background-color: #0056b3;
+body.dark-mode .login-container label {
+  color: #ffffff;
+}
+
+body.dark-mode .login-container p {
+  color: #cccccc;
 }
