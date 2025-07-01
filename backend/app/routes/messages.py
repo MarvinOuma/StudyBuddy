@@ -7,19 +7,24 @@ from datetime import datetime
 messages_bp = Blueprint('messages', __name__)
 
 @messages_bp.route('/group/<int:group_id>', methods=['GET'])
+@jwt_required()
 def get_group_messages(group_id):
+    from app.models import User
     messages = Message.query.filter_by(group_id=group_id).order_by(Message.timestamp.asc()).all()
     result = []
     for msg in messages:
+        user = User.query.get(msg.user_id)
         result.append({
             'id': msg.id,
             'user_id': msg.user_id,
+            'username': user.username if user else 'Unknown User',
             'content': msg.content,
             'timestamp': msg.timestamp.isoformat()
         })
     return jsonify(result), 200
 
 @messages_bp.route('/group/<int:group_id>', methods=['POST'])
+@jwt_required()
 def post_message(group_id):
     user_id = get_jwt_identity()
     data = request.get_json()
