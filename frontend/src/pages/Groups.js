@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import './Groups.css';
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
@@ -24,7 +25,7 @@ const Groups = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="groups-container">
       <h2>Study Groups</h2>
       <ul>
         {groups.map(group => (

@@ -10,6 +10,7 @@ import Memberships from './pages/Memberships';
 import Messages from './pages/Messages';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
+import './styles/global.css';
 
 const PrivateRoute = ({ children }) => {
   const { user } = React.useContext(AuthContext);

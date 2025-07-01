@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import './Messages.css';
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -24,7 +25,7 @@ const Messages = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="messages-container">
       <h2>Messages</h2>
       <ul>
         {messages.map(message => (

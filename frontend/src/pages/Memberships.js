@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import './Memberships.css';
 
 const Memberships = () => {
   const [memberships, setMemberships] = useState([]);
@@ -24,7 +25,7 @@ const Memberships = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="memberships-container">
       <h2>Your Memberships</h2>
       <ul>
         {memberships.map(membership => (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import './Sessions.css';
 
 const Sessions = () => {
   const [sessions, setSessions] = useState([]);
@@ -24,7 +25,7 @@ const Sessions = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="sessions-container">
       <h2>Study Sessions</h2>
       <ul>
         {sessions.map(session => (

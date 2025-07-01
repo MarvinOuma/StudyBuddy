@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import './Profile.css';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -51,7 +52,7 @@ const Profile = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="profile-container">
       <h2>Profile</h2>
       {editMode ? (
         <div>
