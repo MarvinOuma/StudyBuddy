@@ -35,13 +35,16 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="dashboard-container">
-      <h2>Welcome, {user?.username || 'User'}!</h2>
+    <div className="container">
+      <div className="card">
+        <h2>Welcome back, {user?.username || 'User'}! 🎓</h2>
+        <p>Here's your study activity overview</p>
+      </div>
       
       <div className="stats-grid">
         <div className="stat-card">
           <h3>{stats.groups}</h3>
-          <p>Total Groups</p>
+          <p>Available Groups</p>
         </div>
         <div className="stat-card">
           <h3>{stats.memberships}</h3>
@@ -49,29 +52,31 @@ const Dashboard = () => {
         </div>
         <div className="stat-card">
           <h3>{stats.sessions}</h3>
-          <p>Upcoming Sessions</p>
+          <p>Total Sessions</p>
         </div>
       </div>
       
       <div className="dashboard-sections">
         <div className="section">
-          <h3>Recent Groups</h3>
-          {recentGroups.map(group => (
+          <h3>📚 Recent Groups</h3>
+          {recentGroups.length > 0 ? recentGroups.map(group => (
             <div key={group.id} className="item">
               <h4>{group.title}</h4>
-              <p>{group.subject}</p>
+              <p><strong>Subject:</strong> {group.subject}</p>
+              <p>{group.description}</p>
             </div>
-          ))}
+          )) : <p>No groups yet. <a href="/groups">Join your first group!</a></p>}
         </div>
         
         <div className="section">
-          <h3>Upcoming Sessions</h3>
-          {upcomingSessions.map(session => (
+          <h3>📅 Upcoming Sessions</h3>
+          {upcomingSessions.length > 0 ? upcomingSessions.map(session => (
             <div key={session.id} className="item">
-              <p>Group ID: {session.group_id}</p>
-              <p>{session.date} at {session.time}</p>
+              <p><strong>Date:</strong> {session.date}</p>
+              <p><strong>Time:</strong> {session.time}</p>
+              <p><strong>Location:</strong> {session.location || 'Online'}</p>
             </div>
-          ))}
+          )) : <p>No sessions scheduled. <a href="/sessions">Schedule one now!</a></p>}
         </div>
       </div>
     </div>

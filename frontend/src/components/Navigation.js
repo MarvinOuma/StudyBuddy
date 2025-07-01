@@ -1,29 +1,39 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Navigation = () => {
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <nav>
-      <ul>
+      <div className="nav-container">
+        <Link to="/dashboard" style={{fontSize: '1.5em', fontWeight: 'bold', color: '#667eea'}}>StudyBuddy</Link>
+        
         {user ? (
-          <>
-            <li><Link to="/dashboard">Dashboard</Link></li>
-            <li><Link to="/groups">Groups</Link></li>
-            <li><Link to="/sessions">Sessions</Link></li>
-            <li><Link to="/memberships">Memberships</Link></li>
-            <li><Link to="/messages">Messages</Link></li>
-            <li><Link to="/profile">Profile</Link></li>
-            <li><button onClick={logout}>Logout</button></li>
-          </>
+          <div className="nav-links">
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/groups">Groups</Link>
+            <Link to="/sessions">Sessions</Link>
+            <Link to="/memberships">My Groups</Link>
+            <Link to="/messages">Messages</Link>
+            <Link to="/profile">Profile</Link>
+            <span style={{color: '#667eea', marginRight: '10px'}}>Hi, {user.username}!</span>
+            <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+          </div>
         ) : (
-          <>
-            <li><Link to="/login">Login</Link></li>
-          </>
+          <div className="nav-links">
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </div>
         )}
-      </ul>
+      </div>
     </nav>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import './Register.css';
 
 const Register = () => {
@@ -12,7 +12,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5001/auth/register', { username, email, password });
+      await api.post('/auth/register', { username, email, password });
       setSuccess('Registration successful! You can now log in.');
       setError(null);
     } catch (err) {
