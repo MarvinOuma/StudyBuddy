@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Navigation from './components/Navigation';
@@ -23,51 +23,62 @@ const PrivateRoute = ({ children }) => {
   return user ? children : <Navigate to="/login" />;
 };
 
+const AppContent = () => {
+  const location = useLocation();
+  const hideNavigation = ['/login', '/register'].includes(location.pathname);
+  
+  return (
+    <>
+      {!hideNavigation && <Navigation />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/groups" element={
+          <PrivateRoute>
+            <Groups />
+          </PrivateRoute>
+        } />
+        <Route path="/sessions" element={
+          <PrivateRoute>
+            <Sessions />
+          </PrivateRoute>
+        } />
+        <Route path="/memberships" element={
+          <PrivateRoute>
+            <Memberships />
+          </PrivateRoute>
+        } />
+        <Route path="/messages" element={
+          <PrivateRoute>
+            <Messages />
+          </PrivateRoute>
+        } />
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        } />
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+      </Routes>
+    </>
+  );
+};
+
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <Router>
-        <Navigation />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          {/* Example protected route */}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/groups" element={
-            <PrivateRoute>
-              <Groups />
-            </PrivateRoute>
-          } />
-          <Route path="/sessions" element={
-            <PrivateRoute>
-              <Sessions />
-            </PrivateRoute>
-          } />
-          <Route path="/memberships" element={
-            <PrivateRoute>
-              <Memberships />
-            </PrivateRoute>
-          } />
-          <Route path="/messages" element={
-            <PrivateRoute>
-              <Messages />
-            </PrivateRoute>
-          } />
-          <Route path="/profile" element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          } />
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
+          <AppContent />
+
         </Router>
       </AuthProvider>
     </ThemeProvider>

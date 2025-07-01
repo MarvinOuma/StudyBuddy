@@ -24,6 +24,10 @@ const Register = () => {
 
   return (
     <div className="container">
+      <div className="auth-header">
+        <h1 className="brand-title">StudyBuddy</h1>
+        <p className="brand-subtitle">Collaborative Study Platform</p>
+      </div>
       <div className="card register-container">
         <h2>Register</h2>
         {error && <div className="error">{error}</div>}

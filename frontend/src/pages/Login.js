@@ -24,6 +24,10 @@ const Login = () => {
 
   return (
     <div className="container">
+      <div className="auth-header">
+        <h1 className="brand-title">StudyBuddy</h1>
+        <p className="brand-subtitle">Collaborative Study Platform</p>
+      </div>
       <div className="card login-container">
         <h2>Login</h2>
         {error && <div className="error">{error}</div>}
