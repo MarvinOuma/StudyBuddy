@@ -32,3 +32,8 @@
   align-items: center;
   margin-top: 15px;
 }
+
+.session-buttons {
+  display: flex;
+  gap: 10px;
+}

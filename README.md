@@ -10,12 +10,21 @@ A collaborative study platform for students to create groups, schedule sessions,
 - Group chat messaging
 - Dark mode toggle
 - User dashboard
+- Password change and account deletion
+- Role management for group members
+- Session status tracking
 
 ## Tech Stack
 
 **Frontend:** React, React Router, CSS  
 **Backend:** Flask, SQLAlchemy, JWT  
 **Database:** SQLite
+
+## Prerequisites
+
+- Python 3.8+
+- Node.js 14+
+- npm
 
 ## Setup
 

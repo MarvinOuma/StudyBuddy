@@ -48,6 +48,7 @@ class StudySession(db.Model):
     date = db.Column(db.Date, nullable=False)
     time = db.Column(db.Time, nullable=False)
     location = db.Column(db.String(255), nullable=True)
+    status = db.Column(db.String(20), default='upcoming')
 
     group = relationship('StudyGroup', back_populates='sessions')
 

@@ -75,3 +75,16 @@ def delete_session(session_id):
     db.session.delete(session)
     db.session.commit()
     return jsonify({'message': 'Session deleted'}), 200
+
+@sessions_bp.route('/<int:session_id>/toggle-status', methods=['PUT'])
+@jwt_required()
+def toggle_session_status(session_id):
+    session = StudySession.query.get_or_404(session_id)
+    
+    if session.status == 'upcoming':
+        session.status = 'completed'
+    else:
+        session.status = 'upcoming'
+    
+    db.session.commit()
+    return jsonify({'message': 'Session status updated', 'status': session.status}), 200

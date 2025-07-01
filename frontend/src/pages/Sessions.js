@@ -57,6 +57,20 @@ const Sessions = () => {
     }
   };
 
+  const toggleSessionStatus = async (sessionId) => {
+    try {
+      const response = await api.put(`/sessions/${sessionId}/toggle-status`);
+      setSessions(sessions.map(s => 
+        s.id === sessionId ? { ...s, status: response.data.status } : s
+      ));
+      setMessage('Session status updated');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (err) {
+      setMessage('Failed to update session status');
+      setTimeout(() => setMessage(''), 3000);
+    }
+  };
+
   return (
     <div className="container">
       <div className="card">
@@ -116,7 +130,7 @@ const Sessions = () => {
       
       <div className="sessions-grid">
         {sessions.map(session => {
-          const isCompleted = new Date(session.date) < new Date();
+          const isCompleted = session.status === 'completed';
           return (
             <div key={session.id} className="card">
               <h3>Study Session</h3>
@@ -126,13 +140,19 @@ const Sessions = () => {
               <p><strong>Location:</strong> {session.location || 'Online'}</p>
               <div className="session-actions">
                 <div className="session-status">
-                  {isCompleted ? (
-                    <span className="session-completed">Completed</span>
-                  ) : (
-                    <span className="session-upcoming">Upcoming</span>
-                  )}
+                  <span className={isCompleted ? 'session-completed' : 'session-upcoming'}>
+                    {isCompleted ? 'Completed' : 'Upcoming'}
+                  </span>
                 </div>
-                <button className="btn btn-danger" onClick={() => deleteSession(session.id)}>Delete</button>
+                <div className="session-buttons">
+                  <button 
+                    className={`btn ${isCompleted ? 'btn-secondary' : 'btn'}`} 
+                    onClick={() => toggleSessionStatus(session.id)}
+                  >
+                    Mark as {isCompleted ? 'Upcoming' : 'Completed'}
+                  </button>
+                  <button className="btn btn-danger" onClick={() => deleteSession(session.id)}>Delete</button>
+                </div>
               </div>
             </div>
           );

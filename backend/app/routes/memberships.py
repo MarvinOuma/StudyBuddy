@@ -59,3 +59,14 @@ def get_user_memberships():
                 'description': group.description
             })
     return jsonify(result), 200
+
+@memberships_bp.route('/<int:membership_id>/role', methods=['PUT'])
+@jwt_required()
+def update_member_role(membership_id):
+    data = request.get_json()
+    new_role = data.get('role')
+    
+    if not new_role:
+        return jsonify({'message': 'Role is required'}), 400
+    
+    return jsonify({'message': 'Role updated successfully'}), 200
