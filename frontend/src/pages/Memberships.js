@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
 import './Memberships.css';
 
@@ -92,6 +93,7 @@ const Memberships = () => {
               <p>{membership.description}</p>
               <div className="group-actions">
                 <button className="btn" onClick={() => viewGroupDetails(membership)}>View Details</button>
+                <Link to="/messages" className="btn btn-secondary">Chat</Link>
                 <button className="btn btn-danger" onClick={() => leaveGroup(membership.group_id)}>Leave Group</button>
               </div>
             </div>

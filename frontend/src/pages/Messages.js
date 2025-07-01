@@ -33,6 +33,13 @@ const Messages = () => {
   useEffect(() => {
     if (selectedGroup) {
       fetchMessages(selectedGroup.group_id);
+      
+      // Auto-refresh messages every 3 seconds
+      const interval = setInterval(() => {
+        fetchMessages(selectedGroup.group_id);
+      }, 3000);
+      
+      return () => clearInterval(interval);
     }
   }, [selectedGroup]);
 
