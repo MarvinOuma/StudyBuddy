@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Navigation from './components/Navigation';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -19,8 +20,9 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
         <Navigation />
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -61,8 +63,9 @@ function App() {
           } />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>
-      </Router>
-    </AuthProvider>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

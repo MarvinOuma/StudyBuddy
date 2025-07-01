@@ -10,12 +10,21 @@ const Groups = () => {
   const [newGroup, setNewGroup] = useState({ title: '', subject: '', description: '' });
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
+  const [joinedGroups, setJoinedGroups] = useState([]);
 
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await api.get('/groups/');
-        setGroups(response.data);
+        const [groupsRes, membershipsRes] = await Promise.all([
+          api.get('/groups/'),
+          api.get('/memberships/user')
+        ]);
+        
+        const joinedGroupIds = membershipsRes.data.map(m => m.group_id);
+        const availableGroups = groupsRes.data.filter(g => !joinedGroupIds.includes(g.id));
+        
+        setGroups(availableGroups);
+        setJoinedGroups(joinedGroupIds);
       } catch (err) {
         setError('Failed to load groups');
       } finally {
@@ -62,7 +71,7 @@ const Groups = () => {
   return (
     <div className="container">
       <div className="card">
-        <h2>📚 Study Groups</h2>
+        <h2>Available Study Groups</h2>
         <p>Join existing groups or create your own study community</p>
         {message && (
           <div className={messageType === 'success' ? 'success' : 'error'}>

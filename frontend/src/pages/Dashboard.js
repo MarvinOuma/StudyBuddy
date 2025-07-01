@@ -37,7 +37,7 @@ const Dashboard = () => {
   return (
     <div className="container">
       <div className="card">
-        <h2>Welcome back, {user?.username || 'User'}! 🎓</h2>
+        <h2>Welcome back, {user?.username || 'User'}!</h2>
         <p>Here's your study activity overview</p>
       </div>
       
@@ -58,7 +58,7 @@ const Dashboard = () => {
       
       <div className="dashboard-sections">
         <div className="section">
-          <h3>📚 Recent Groups</h3>
+          <h3>Recent Groups</h3>
           {recentGroups.length > 0 ? recentGroups.map(group => (
             <div key={group.id} className="item">
               <h4>{group.title}</h4>
@@ -69,7 +69,7 @@ const Dashboard = () => {
         </div>
         
         <div className="section">
-          <h3>📅 Upcoming Sessions</h3>
+          <h3>Upcoming Sessions</h3>
           {upcomingSessions.length > 0 ? upcomingSessions.map(session => (
             <div key={session.id} className="item">
               <p><strong>Date:</strong> {session.date}</p>

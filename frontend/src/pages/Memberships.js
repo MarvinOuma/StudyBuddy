@@ -58,13 +58,27 @@ const Memberships = () => {
     fetchGroupDetails(group.group_id);
   };
 
+  const updateMemberRole = async (memberId, newRole) => {
+    try {
+      await api.put(`/memberships/${memberId}/role`, { role: newRole });
+      setGroupMembers(groupMembers.map(m => 
+        m.id === memberId ? { ...m, role: newRole } : m
+      ));
+      setMessage('Member role updated successfully');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (err) {
+      setMessage('Failed to update member role');
+      setTimeout(() => setMessage(''), 3000);
+    }
+  };
+
   if (loading) return <p>Loading memberships...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="container">
       <div className="card">
-        <h2>👥 My Study Groups</h2>
+        <h2>My Study Groups</h2>
         <p>Manage your group memberships and view group details</p>
         {message && <div className={message.includes('Successfully') ? 'success' : 'error'}>{message}</div>}
       </div>
@@ -94,12 +108,22 @@ const Memberships = () => {
 
           <div className="dashboard-sections">
             <div className="section">
-              <h3>👤 Group Members</h3>
+              <h3>Group Members</h3>
               {groupMembers.length > 0 ? (
                 groupMembers.map(member => (
-                  <div key={member.id} className="item">
-                    <p><strong>{member.username}</strong></p>
-                    <p>Role: {member.role || 'Member'}</p>
+                  <div key={member.id} className="item member-item">
+                    <div className="member-info">
+                      <p><strong>{member.username}</strong></p>
+                      <select 
+                        value={member.role || 'Member'} 
+                        onChange={(e) => updateMemberRole(member.id, e.target.value)}
+                        className="role-select"
+                      >
+                        <option value="Member">Member</option>
+                        <option value="Moderator">Moderator</option>
+                        <option value="Admin">Admin</option>
+                      </select>
+                    </div>
                   </div>
                 ))
               ) : (
@@ -108,7 +132,7 @@ const Memberships = () => {
             </div>
 
             <div className="section">
-              <h3>📅 Group Sessions</h3>
+              <h3>Group Sessions</h3>
               {groupSessions.length > 0 ? (
                 groupSessions.map(session => (
                   <div key={session.id} className="item">
@@ -116,7 +140,7 @@ const Memberships = () => {
                     <p><strong>Time:</strong> {session.time}</p>
                     <p><strong>Location:</strong> {session.location || 'Online'}</p>
                     <span className={new Date(session.date) < new Date() ? 'session-completed' : 'session-upcoming'}>
-                      {new Date(session.date) < new Date() ? '✅ Completed' : '⏰ Upcoming'}
+                      {new Date(session.date) < new Date() ? 'Completed' : 'Upcoming'}
                     </span>
                   </div>
                 ))

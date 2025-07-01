@@ -33,47 +33,85 @@ const Sessions = () => {
       await api.post('/sessions/', newSession);
       setNewSession({ group_id: '', date: '', time: '', location: '' });
       setShowForm(false);
+      setMessage('Session created successfully!');
       const response = await api.get('/sessions/');
       setSessions(response.data);
+      setTimeout(() => setMessage(''), 3000);
     } catch (err) {
-      setError('Failed to create session');
+      setMessage('Failed to create session');
+      setTimeout(() => setMessage(''), 3000);
+    }
+  };
+
+  const deleteSession = async (sessionId) => {
+    if (window.confirm('Are you sure you want to delete this session?')) {
+      try {
+        await api.delete(`/sessions/${sessionId}`);
+        setSessions(sessions.filter(s => s.id !== sessionId));
+        setMessage('Session deleted successfully');
+        setTimeout(() => setMessage(''), 3000);
+      } catch (err) {
+        setMessage('Failed to delete session');
+        setTimeout(() => setMessage(''), 3000);
+      }
     }
   };
 
   return (
-    <div className="sessions-container">
-      <h2>Study Sessions</h2>
-      <button onClick={() => setShowForm(!showForm)}>Schedule New Session</button>
+    <div className="container">
+      <div className="card">
+        <h2>Study Sessions</h2>
+        <p>Manage your study sessions and track attendance</p>
+        {message && <div className={message.includes('successfully') ? 'success' : 'error'}>{message}</div>}
+        <button className="btn" onClick={() => setShowForm(!showForm)}>
+          {showForm ? 'Cancel' : 'Schedule New Session'}
+        </button>
+      </div>
       
       {showForm && (
-        <form onSubmit={createSession}>
-          <input
-            type="number"
-            placeholder="Group ID"
-            value={newSession.group_id}
-            onChange={(e) => setNewSession({...newSession, group_id: e.target.value})}
-            required
-          />
-          <input
-            type="date"
-            value={newSession.date}
-            onChange={(e) => setNewSession({...newSession, date: e.target.value})}
-            required
-          />
-          <input
-            type="time"
-            value={newSession.time}
-            onChange={(e) => setNewSession({...newSession, time: e.target.value})}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Location (optional)"
-            value={newSession.location}
-            onChange={(e) => setNewSession({...newSession, location: e.target.value})}
-          />
-          <button type="submit">Schedule Session</button>
-        </form>
+        <div className="card">
+          <h3>Schedule New Session</h3>
+          <form onSubmit={createSession}>
+            <div className="form-group">
+              <label>Group ID</label>
+              <input
+                type="number"
+                placeholder="Enter group ID"
+                value={newSession.group_id}
+                onChange={(e) => setNewSession({...newSession, group_id: e.target.value})}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Date</label>
+              <input
+                type="date"
+                value={newSession.date}
+                onChange={(e) => setNewSession({...newSession, date: e.target.value})}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Time</label>
+              <input
+                type="time"
+                value={newSession.time}
+                onChange={(e) => setNewSession({...newSession, time: e.target.value})}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Location</label>
+              <input
+                type="text"
+                placeholder="Online, Library, etc."
+                value={newSession.location}
+                onChange={(e) => setNewSession({...newSession, location: e.target.value})}
+              />
+            </div>
+            <button type="submit" className="btn">Schedule Session</button>
+          </form>
+        </div>
       )}
       
       <div className="sessions-grid">
@@ -86,12 +124,15 @@ const Sessions = () => {
               <p><strong>Date:</strong> {session.date}</p>
               <p><strong>Time:</strong> {session.time}</p>
               <p><strong>Location:</strong> {session.location || 'Online'}</p>
-              <div className="session-status">
-                {isCompleted ? (
-                  <span className="session-completed">✅ Completed</span>
-                ) : (
-                  <span className="session-upcoming">⏰ Upcoming</span>
-                )}
+              <div className="session-actions">
+                <div className="session-status">
+                  {isCompleted ? (
+                    <span className="session-completed">Completed</span>
+                  ) : (
+                    <span className="session-upcoming">Upcoming</span>
+                  )}
+                </div>
+                <button className="btn btn-danger" onClick={() => deleteSession(session.id)}>Delete</button>
               </div>
             </div>
           );

@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Navigation = () => {
   const { user, logout } = useContext(AuthContext);
+  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -24,11 +26,23 @@ const Navigation = () => {
             <Link to="/memberships">My Groups</Link>
             <Link to="/messages">Messages</Link>
             <Link to="/profile">Profile</Link>
+            <div className="theme-toggle">
+              <label className="switch">
+                <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
+                <span className="slider"></span>
+              </label>
+            </div>
             <span style={{color: '#667eea', marginRight: '10px'}}>Hi, {user.username}!</span>
             <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
           </div>
         ) : (
           <div className="nav-links">
+            <div className="theme-toggle">
+              <label className="switch">
+                <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
+                <span className="slider"></span>
+              </label>
+            </div>
             <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
           </div>
