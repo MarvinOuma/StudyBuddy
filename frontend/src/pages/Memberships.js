@@ -10,7 +10,7 @@ const Memberships = () => {
   useEffect(() => {
     const fetchMemberships = async () => {
       try {
-        const response = await api.get('/memberships');
+        const response = await api.get('/memberships/user');
         setMemberships(response.data);
       } catch (err) {
         setError('Failed to load memberships');
@@ -29,9 +29,10 @@ const Memberships = () => {
       <h2>Your Memberships</h2>
       <ul>
         {memberships.map(membership => (
-          <li key={membership.id}>
-            <h3>{membership.group_title}</h3>
-            <p>Status: {membership.status}</p>
+          <li key={membership.group_id}>
+            <h3>{membership.title}</h3>
+            <p>Subject: {membership.subject}</p>
+            <p>{membership.description}</p>
           </li>
         ))}
       </ul>

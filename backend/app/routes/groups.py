@@ -24,6 +24,7 @@ def get_groups():
     return jsonify(result), 200
 
 @groups_bp.route('/', methods=['POST'])
+@jwt_required()
 def create_group():
     data = request.get_json()
     if not data or not data.get('title') or not data.get('subject'):

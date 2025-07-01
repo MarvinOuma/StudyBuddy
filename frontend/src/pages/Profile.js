@@ -1,81 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import api from '../services/api';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import './Profile.css';
 
 const Profile = () => {
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-  });
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await api.get('/profile');
-        setProfile(response.data);
-        setFormData({
-          username: response.data.username,
-          email: response.data.email,
-        });
-      } catch (err) {
-        setError('Failed to load profile');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProfile();
-  }, []);
-
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSave = async () => {
-    try {
-      await api.put('/profile', formData);
-      setProfile(formData);
-      setEditMode(false);
-      setError(null);
-    } catch (err) {
-      setError('Failed to update profile');
-    }
-  };
-
-  if (loading) return <p>Loading profile...</p>;
-  if (error) return <p>{error}</p>;
+  const { user } = useContext(AuthContext);
+  const [stats, setStats] = useState({ groupsJoined: 0, sessionsAttended: 0 });
 
   return (
     <div className="profile-container">
-      <h2>Profile</h2>
-      {editMode ? (
-        <div>
-          <label>
-            Username:
-            <input name="username" value={formData.username} onChange={handleChange} />
-          </label>
-          <br />
-          <label>
-            Email:
-            <input name="email" value={formData.email} onChange={handleChange} />
-          </label>
-          <br />
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => setEditMode(false)}>Cancel</button>
+      <h2>Your Profile</h2>
+      <div className="profile-info">
+        <p><strong>Username:</strong> {user?.username || 'Not logged in'}</p>
+        <p><strong>ID:</strong> {user?.id || 'N/A'}</p>
+      </div>
+      
+      <div className="profile-stats">
+        <h3>Your Study Activity</h3>
+        <div className="stat-item">
+          <span>Groups Joined:</span>
+          <span>{stats.groupsJoined}</span>
         </div>
-      ) : (
-        <div>
-          <p><strong>Username:</strong> {profile.username}</p>
-          <p><strong>Email:</strong> {profile.email}</p>
-          <button onClick={() => setEditMode(true)}>Edit Profile</button>
+        <div className="stat-item">
+          <span>Sessions Attended:</span>
+          <span>{stats.sessionsAttended}</span>
         </div>
-      )}
+      </div>
     </div>
   );
 };

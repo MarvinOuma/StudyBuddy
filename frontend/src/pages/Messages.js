@@ -10,7 +10,7 @@ const Messages = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await api.get('/messages');
+        const response = await api.get('/messages/group/1');
         setMessages(response.data);
       } catch (err) {
         setError('Failed to load messages');
