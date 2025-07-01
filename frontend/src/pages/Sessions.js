@@ -8,6 +8,7 @@ const Sessions = () => {
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [newSession, setNewSession] = useState({ group_id: '', date: '', time: '', location: '' });
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -75,16 +76,27 @@ const Sessions = () => {
         </form>
       )}
       
-      <ul>
-        {sessions.map(session => (
-          <li key={session.id}>
-            <p>Group ID: {session.group_id}</p>
-            <p>Date: {session.date}</p>
-            <p>Time: {session.time}</p>
-            <p>Location: {session.location || 'Not specified'}</p>
-          </li>
-        ))}
-      </ul>
+      <div className="sessions-grid">
+        {sessions.map(session => {
+          const isCompleted = new Date(session.date) < new Date();
+          return (
+            <div key={session.id} className="card">
+              <h3>Study Session</h3>
+              <p><strong>Group ID:</strong> {session.group_id}</p>
+              <p><strong>Date:</strong> {session.date}</p>
+              <p><strong>Time:</strong> {session.time}</p>
+              <p><strong>Location:</strong> {session.location || 'Online'}</p>
+              <div className="session-status">
+                {isCompleted ? (
+                  <span className="session-completed">✅ Completed</span>
+                ) : (
+                  <span className="session-upcoming">⏰ Upcoming</span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

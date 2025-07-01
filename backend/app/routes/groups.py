@@ -84,3 +84,16 @@ def delete_group(group_id):
     db.session.delete(group)
     db.session.commit()
     return jsonify({'message': 'Group deleted'}), 200
+
+@groups_bp.route('/<int:group_id>/members', methods=['GET'])
+def get_group_members(group_id):
+    from app.models import User, Membership
+    members = db.session.query(User).join(Membership).filter(Membership.group_id == group_id).all()
+    result = []
+    for member in members:
+        result.append({
+            'id': member.id,
+            'username': member.username,
+            'role': 'Member'  # Default role, can be enhanced later
+        })
+    return jsonify(result), 200
